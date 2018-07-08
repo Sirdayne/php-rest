@@ -37,18 +37,26 @@ VALUES ('Первая статья', 'Статья самая первая в т
 
 $sql = "SELECT id, title, body, date FROM posts";
 $result = $conn->query($sql);
+//executeSelect($result);
 
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        echo "id: " . $row["id"]. " - title: " . 
-		$row["title"] . " - body: " . 
-		$row["body"] . " - date: " . 
-		$row["date"] . "<br>";
-    }
+$sql = "DELETE FROM posts WHERE id=3";
+//executeQuery($sql, 'delete posts', $conn);
+
+$sql = "UPDATE posts SET title='Вторая статья', body='Вторая статья тут' WHERE id=2";
+executeQuery($sql, 'update posts', $conn);
+
+function executeSelect($result) {
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			echo "id: " . $row["id"]. " - title: " . 
+			$row["title"] . " - body: " . 
+			$row["body"] . " - date: " . 
+			$row["date"] . "<br>";
+		}
+	}
 }
 
-function executeQuery($sql, $name, $conn)
-{
+function executeQuery($sql, $name, $conn) {
     if ($conn->query($sql) === TRUE) {
 		echo $name . " successfully";
 	} else {
